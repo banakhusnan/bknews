@@ -46,7 +46,6 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 return Limit::perMinute(5)->by($email.$request->ip());
             }
-
             return redirect()->back()->with('danger', 'Username atau Password yang kamu masukan salah!');
         });
 

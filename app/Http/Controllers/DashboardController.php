@@ -10,22 +10,24 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard.index');
-    }
-    
-    public function users()
-    {
-        $user = User::all();
-        return view('dashboard.users',[
-            'users' => $user
-        ]);
+        if(auth()->user()->role == 'admin'){
+            $news = News::all();
+            return view('dashboard.index', [
+                'infoNews' => $news
+            ]);
+        } else if(auth()->user()->role == 'author'){
+            $news = News::where('user_id', auth()->user()->id)->get();
+            return view('dashboard.index',[
+                'infoNews' => $news
+            ]);
+        }
     }
 
-    public function news()
-    {
-        $news = News::all();
-        // dd($news);
-        return view('dashboard.news',[
+    public function profile(){
+        $profile = User::where('id', auth()->user()->id)->first();
+        $news = News::where('user_id', auth()->user()->id)->get();
+        return view('dashboard.profile.index', [
+            'user' => $profile,
             'news' => $news
         ]);
     }

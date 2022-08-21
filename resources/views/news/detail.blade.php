@@ -24,8 +24,11 @@
             </h6>
 
             <figure class="figure mb-3">
-                <img src="https://source.unsplash.com/1200x400?{{ $news->subcategory->category->name }}"
-                    class="img-fluid rounded" alt="{{ $news->subcategory->category->name }}">
+                @if ($news->image)
+                <img src="{{ asset('storage/'.$news->image) }}" class="img-fluid rounded">
+                @else
+                <img src="{{ asset('img/not-found.jpg') }}" class="img-fluid rounded">
+                @endif
                 <figcaption class="figure-caption mt-1">A caption for the above image.</figcaption>
             </figure>
         </div>
@@ -34,7 +37,7 @@
         {{-- Description for detail --}}
         <div class="col-md-7 col-lg-7 col-sm-7">
             <h5 class="fs-6">Penulis : <a href="#" class="text-decoration-none">{{ $news->user->name }}</a></h5>
-            <p><b>Magelang, BK News -- </b>{!! $news->description !!}</p>
+            <p>{!! $news->description !!}</p>
         </div>
 
         {{-- Other News --}}

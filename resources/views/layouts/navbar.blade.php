@@ -10,10 +10,11 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item">
                     <div class="input-group">
-                        <input class="form-control border-0" type="text" placeholder="Cari disini..."
-                            aria-describedby="button-search" />
-                        <button class="btn btn-white" id="button-search" type="button"><i
-                                class="fa-solid fa-magnifying-glass"></i></button>
+                        <input class="form-control border-0" name="search" id="search" type="text"
+                            placeholder="Cari disini..." aria-describedby="button-search" />
+                        <button class="btn btn-white" id="button-search" type="submit" onclick="search()">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
                 </li>
                 <li class="nav-item mx-3">
@@ -29,16 +30,21 @@
                     <a class="nav-link" title="{{ auth()->user()->name }}" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-lg-inline p-2">
-                            <img src="{{ url('img/user.png') }}" class="img-profile bg-white rounded-circle p-1"
-                                width="40" height="40" alt="">
+                            @if(auth()->user()->image != null)
+                            <img src="{{ asset('storage/'.auth()->user()->image) }}"
+                                class="img-profile border rounded-circle" width="40" height="40">
+                            @else
+                            <img src="{{ asset('img/user.png') }}" class="img-profile border rounded-circle" width="40"
+                                height="40">
+                            @endif
                         </div>
                     </a>
                     @else
                     <a class="nav-link" title="Login" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <div class="d-lg-inline p-2">
-                            <img src="{{ url('img/user.png') }}" class="img-profile bg-white rounded-circle p-1"
-                                width="40" height="40" alt="">
+                            <img src="{{ asset('img/user.png') }}" class="img-profile border rounded-circle" width="40"
+                                height="40">
                         </div>
                     </a>
                     @endif
@@ -47,12 +53,18 @@
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bullhorn"></i> Pengaduan</a>
                         </li>
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-book-open"></i> Laporan</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard.index') }}"><i
+                        @if (auth()->user() && auth()->user()->role != 'mahasiswa')
+                        <li>
+                            <a class="dropdown-item" href="{{ route('dashboard.index') }}"><i
                                     class="fa-solid fa-gauge"></i>
-                                Dashboard</a></li>
+                                Dashboard
+                            </a>
+                        </li>
+                        @endif
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        @if (auth()->user())
                         <li>
                             <form action="/logout" method="post">
                                 @csrf
@@ -62,10 +74,12 @@
                                 </button>
                             </form>
                         </li>
+                        @else
                         <li><a class="dropdown-item" href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>
                                 Masuk</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Registrasi</a></li>
+                        @endif
                     </ul>
                 </li>
             </ul>
@@ -88,3 +102,14 @@
         </div>
     </div>
 </div>
+
+{{-- Javascript --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+</script>
+
+<script>
+    function search() {
+        console.log($('#search').val());
+    }
+</script>

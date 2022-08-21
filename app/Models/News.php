@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Subcategory;
 use App\Models\User;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'news';
     protected $guarded = ['id'];
@@ -32,7 +33,6 @@ class News extends Model
         });
     }
 
-
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class);
@@ -41,5 +41,19 @@ class News extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

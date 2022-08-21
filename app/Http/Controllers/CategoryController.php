@@ -23,7 +23,10 @@ class CategoryController extends Controller
         return view('category.index', [
             'title' => [$title, $subcategoryName],
             'nav' => Subcategory::where('category_id', $slugCategory->id)->get(),
-            'category' => News::filter(['category' => $slugCategory->slug, 'subcategory' => request('subcategory')])->get()
+            'category' => News::filter([
+                'category' => $slugCategory->slug, 
+                'subcategory' => request('subcategory'),
+                ])->get()
         ]);
     }
 }

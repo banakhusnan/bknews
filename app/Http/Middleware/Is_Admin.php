@@ -18,7 +18,7 @@ class Is_Admin
     {
         $role = auth()->user()->role;
 
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'author'){
             return $next($request);
         }
 

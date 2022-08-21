@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PostNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 
 /*
@@ -16,16 +18,18 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [NewsController::class, 'index'])->name('home');
-Route::get('/about', [NewsController::class, 'about']);
-Route::get('/read/{slug:slug}', [NewsController::class, 'detailNews']);
+Route::get('/', [PostNewsController::class, 'index'])->name('home');
+Route::get('/about', [PostNewsController::class, 'about']);
+Route::get('/read/{slug:slug}', [PostNewsController::class, 'detailNews']);
 Route::get('/news/{slugCategory:slug}', [CategoryController::class, 'index']);
 
 Route::middleware(['auth', 'verified'])->group(function(){
     Route::middleware('is_admin')->group(function(){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-        Route::get('/users', [DashboardController::class, 'users'])->name('dashboard.users');
-        Route::get('/news', [DashboardController::class, 'news'])->name('dashboard.news');
+        Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('dashboard.profile');
+
+        Route::resource('/dashboard/users', UserController::class);
+        Route::resource('/dashboard/news', NewsController::class);
     });
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();

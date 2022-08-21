@@ -34,9 +34,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
+            // Update Image Profile
+            if(isset($input['image'])){
+                $image = $input['image']->store('file-images', ['disk' => 'my_files']);
+            } else {
+                $image = $user->image;
+            }
+
             $user->forceFill([
+                'image' => $image,
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'no_induk' => $input['no_induk'],
             ])->save();
         }
     }
@@ -50,9 +59,17 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser($user, array $input)
     {
+        if(isset($input['image'])){
+            $image = $input['image']->store('file-images', ['disk' => 'my_files']);
+        } else {
+            $image = $user->image;
+        }
+
         $user->forceFill([
+            'image' => $image,
             'name' => $input['name'],
             'email' => $input['email'],
+            'no_induk' => $input['no_induk'],
             'email_verified_at' => null,
         ])->save();
 

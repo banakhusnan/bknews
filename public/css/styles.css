@@ -9091,6 +9091,10 @@ fieldset:disabled .btn {
   user-select: none !important;
 }
 
+.user-select-cannot {
+  cursor: not-allowed !important;
+}
+
 .pe-none {
   pointer-events: none !important;
 }
