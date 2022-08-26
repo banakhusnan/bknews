@@ -6,6 +6,7 @@ use App\Http\Controllers\PostNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PengaduanController;
 use Illuminate\Http\Request;
 
 /*
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::resource('/dashboard/users', UserController::class);
         Route::resource('/dashboard/news', NewsController::class);
     });
+    Route::get('/pengaduan', [PengaduanController::class, 'index']);
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         

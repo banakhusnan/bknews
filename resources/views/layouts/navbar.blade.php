@@ -18,12 +18,12 @@
                     </div>
                 </li>
                 <li class="nav-item mx-3">
-                    <button class="btn btn-outline-bkn position-relative">
+                    <a class="btn btn-outline-bkn position-relative" href="/pengaduan">
                         Adukan Suara
                         <span
                             class="position-absolute top-0 start-0 translate-middle badge rounded-circle bg-bkn p-2"><span
                                 class="visually-hidden">unread messages</span></span>
-                    </button>
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
                     @if (auth()->user())

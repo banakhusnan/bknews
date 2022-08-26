@@ -8457,6 +8457,11 @@ fieldset:disabled .btn {
   margin-bottom: auto !important;
 }
 
+.my-custom1 {
+  margin-top: 12rem !important;
+  margin-bottom: 12rem !important;
+}
+
 .mt-0 {
   margin-top: 0 !important;
 }
@@ -8537,6 +8542,10 @@ fieldset:disabled .btn {
   margin-bottom: 3rem !important;
 }
 
+.mb-6 {
+  margin-bottom: 6rem !important;
+}
+
 .mb-auto {
   margin-bottom: auto !important;
 }
@@ -8595,6 +8604,10 @@ fieldset:disabled .btn {
 
 .p-5 {
   padding: 3rem !important;
+}
+
+.p-custom1 {
+  padding: 6rem !important;
 }
 
 .px-0 {
@@ -8974,6 +8987,13 @@ fieldset:disabled .btn {
 .bg-primary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+}
+.bg-primary-custom {
+  background-color: rgb(3, 69, 252) !important;
+}
+
+.bg-primary-gradient {
+  background: linear-gradient(rgb(3, 69, 252), rgb(150, 193, 255)) !important;
 }
 
 .bg-bkn {
