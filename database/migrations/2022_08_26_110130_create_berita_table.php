@@ -13,18 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
-            $table->id();
+        Schema::create('berita', function (Blueprint $table) {
+            $table->bigIncrements('id_berita');
+            $table->foreignId('author_id')->references('id_author')->on('author')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('subkategori_id')->references('id_subkategori')->on('subkategori')->onUpdate('cascade')->onDelete('cascade');
             $table->string('image')->nullable();
-            // Author
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-
-            // Subcategory relationship with Category
-            $table->foreignId('subcategory_id')->constrained('subcategory')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->string('title');
+            $table->string('judul');
             $table->string('slug')->unique();
-            $table->text('description');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('berita');
     }
 };

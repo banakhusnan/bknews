@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id_user');
-            $table->enum('role', ['mahasiswa', 'author', 'admin'])->default('mahasiswa');
+        Schema::create('subkategori', function (Blueprint $table) {
+            $table->bigIncrements('id_subkategori');
+            $table->foreignId('kategori_id')->references('id_kategori')->on('kategori')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('slug')->unique();
             $table->string('nama');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('no_hp');
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('subkategori');
     }
 };
