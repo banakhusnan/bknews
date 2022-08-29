@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Subcategory;
-use App\Models\User;
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\Author;
+use App\Models\Subkategori;
 
-class News extends Model
+class Berita extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
 
-    protected $table = 'news';
-    protected $guarded = ['id'];
-    protected $with = ['subcategory', 'user'];
+    protected $guarded = ['id_berita'];
+    protected $table = 'berita';
+    protected $with = ['subkategori', 'author'];
 
     // Filtering
     public function scopeFilter($query, array $filter)
@@ -32,15 +31,15 @@ class News extends Model
             });
         });
     }
-
-    public function subcategory()
-    {
-        return $this->belongsTo(Subcategory::class);
-    }
     
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Author::class, 'author_id', 'id_author');
+    }
+
+    public function subkategori()
+    {
+        return $this->belongsTo(Subkategori::class, 'subkategori_id', 'id_subkategori');
     }
 
     public function getRouteKeyName()

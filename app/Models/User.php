@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\News;
+use App\Models\Author;
+use App\Models\Mahasiswa;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -19,6 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $guarded = ['id'];
+    protected $primaryKey = 'id_user';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,7 +41,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function news(){
-        return $this->hasMany(News::class);
+    public function author(){
+        return $this->hasOne(Author::class);
+    }
+    public function mahasiswa(){
+        return $this->hasOne(Mahasiswa::class);
     }
 }
