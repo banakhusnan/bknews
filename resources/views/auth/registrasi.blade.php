@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Nama Lengkap" name="name">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Nama Lengkap" name="nama">
             <label for="floatingInput" class="text-muted">Nama Lengkap</label>
             @if ($error = $errors->get('name'))
             <small class="text-danger float-start mb-1">
@@ -34,12 +34,23 @@
             @endif
         </div>
         <div class="form-floating mb-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="123456" name="no_induk">
+            <input type="text" class="form-control" id="floatingInput" placeholder="123456" name="id_user">
             <label for="floatingInput" class="text-muted">Nomor Induk <label id="label">Mahasiswa</label></label>
             <p class="text-start mb-0 user-select-none">
                 <small class="text-primary" id="labelNotif">Masukan no induk menggunakan (.)</small>
             </p>
-            @if ($error = $errors->get('no_induk'))
+            @if ($error = $errors->get('id_user'))
+            <small class="text-danger float-start mb-1">
+                @foreach ($error as $e)
+                {{ $e }}
+                @endforeach
+            </small>
+            @endif
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="+62" name="no_hp">
+            <label for="floatingInput" class="text-muted">Nomor Handphone</label>
+            @if ($error = $errors->get('no_hp'))
             <small class="text-danger float-start mb-1">
                 @foreach ($error as $e)
                 {{ $e }}
