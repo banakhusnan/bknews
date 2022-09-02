@@ -22,7 +22,7 @@ use Illuminate\Http\Request;
 Route::get('/', [PostNewsController::class, 'index'])->name('home');
 Route::get('/about', [PostNewsController::class, 'about']);
 Route::get('/read/{slug:slug}', [PostNewsController::class, 'detailNews']);
-Route::get('/news/{slugCategory:slug}', [CategoryController::class, 'index']);
+Route::get('/news/{slugKategori:slug}', [CategoryController::class, 'index']);
 
 Route::middleware(['auth', 'verified'])->group(function(){
     Route::middleware('is_admin')->group(function(){
