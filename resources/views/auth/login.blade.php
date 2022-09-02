@@ -37,7 +37,7 @@
     <button class="btn btn-primary w-100" type="submit">Masuk</button>
 
     <p class="mt-2">
-        <a href="" class="text-decoration-none">Lupa Password?</a>
+        <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa Password?</a>
     </p>
 </form>
 
