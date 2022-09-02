@@ -9,13 +9,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item">
-                    <div class="input-group">
+                    <form class="input-group" method="GET" action="{{ url()->current() }}">
+                        @if (request('subcategory'))
+                        <input type="hidden" value="{{ request('subcategory') }}" name="subcategory">
+                        @endif
                         <input class="form-control border-0" name="search" id="search" type="text"
-                            placeholder="Cari disini..." aria-describedby="button-search" />
-                        <button class="btn btn-white" id="button-search" type="submit" onclick="search()">
+                            placeholder="Cari disini..." aria-describedby="button-search"
+                            value="{{ request('search') }}" />
+                        <button class="btn btn-white" id="button-search" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                    </div>
+                    </form>
                 </li>
                 <li class="nav-item mx-3">
                     <a class="btn btn-outline-bkn position-relative" href="/pengaduan">
@@ -49,11 +53,12 @@
                     </a>
                     @endif
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (auth()->user())
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i> Profil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bullhorn"></i> Pengaduan</a>
                         </li>
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-book-open"></i> Laporan</a></li>
-                        @if (auth()->user() && auth()->user()->role != 'mahasiswa')
+                        @elseif (auth()->user() && auth()->user()->role != 'mahasiswa')
                         <li>
                             <a class="dropdown-item" href="{{ route('dashboard.index') }}"><i
                                     class="fa-solid fa-gauge"></i>
@@ -61,10 +66,16 @@
                             </a>
                         </li>
                         @endif
+                        @if (! auth()->user())
+                        <li><a class="dropdown-item" href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                Masuk</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                Registrasi</a></li>
+                        @endif
+                        @if (auth()->user())
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        @if (auth()->user())
                         <li>
                             <form action="/logout" method="post">
                                 @csrf
@@ -74,11 +85,6 @@
                                 </button>
                             </form>
                         </li>
-                        @else
-                        <li><a class="dropdown-item" href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>
-                                Masuk</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                Registrasi</a></li>
                         @endif
                     </ul>
                 </li>
@@ -90,26 +96,11 @@
     <div class="container">
         <div class="nav ms-5s">
             <a class="nav-link {{ Request::is('/') ? 'nav-tabs' : '' }}" href="/">Home</a>
-            <a class="nav-link {{ Request::is('news/perkuliahan') ? 'nav-tabs' : '' }}"
-                href="/news/perkuliahan">Perkuliahan</a>
-            <a class="nav-link {{ Request::is('news/fasilitas') ? 'nav-tabs' : '' }}"
-                href="/news/fasilitas">Fasilitas</a>
-            <a class="nav-link {{ Request::is('news/kemahasiswaan') ? 'nav-tabs' : '' }}"
-                href="/news/kemahasiswaan">Kemahasiswaan</a>
-            <a class="nav-link {{ Request::is('news/layanan') ? 'nav-tabs' : '' }}" href="/news/layanan">Layanan</a>
-            <a class="nav-link {{ Request::is('news/administrasi') ? 'nav-tabs' : '' }}"
-                href="/news/administrasi">Administrasi</a>
+            <a class="nav-link {{ Request::is('news/olah-raga') ? 'nav-tabs' : '' }}" href="/news/olah-raga">Olah
+                Raga</a>
+            <a class="nav-link {{ Request::is('news/ekonomi') ? 'nav-tabs' : '' }}" href="/news/ekonomi">Ekonomi</a>
+            <a class="nav-link {{ Request::is('news/teknologi') ? 'nav-tabs' : '' }}"
+                href="/news/teknologi">Teknologi</a>
         </div>
     </div>
 </div>
-
-{{-- Javascript --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-</script>
-
-<script>
-    function search() {
-        console.log($('#search').val());
-    }
-</script>
