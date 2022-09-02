@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $title[1] ? $title[0] .' | '. $title[1]->name : $title[0])
+@section('title', $title[1] ? $title[0] .' | '. $title[1]->nama : $title[0])
 @section('container')
 <div class="container">
     {{-- Nav --}}
@@ -8,39 +8,41 @@
         <nav class="nav p-1 align-items-center">
             <a class="nav-link fs-4 disabled user-select-none border-end border-danger text-dark fw-bold-500"
                 aria-current="page" href="#">{{ $title[0] }}</a>
-            @foreach ($nav as $subcategory)
-            <a class="nav-link fs-6 link-dark fw-bold ms-2 {{ request('subcategory') == $subcategory->slug ? 'bg-bkn text-white rounded' : '' }}"
+            @foreach ($nav as $subkategori)
+            <a class="nav-link fs-6 link-dark fw-bold ms-2 {{ request('subcategory') == $subkategori->slug ? 'bg-bkn text-white rounded' : '' }}"
                 aria-current="page"
-                href="/news/{{ $subcategory->category->slug }}?subcategory={{ $subcategory->slug }}">
-                {{ $subcategory->name }}
+                href="/news/{{ $subkategori->kategori->slug }}?subcategory={{ $subkategori->slug }}">
+                {{ $subkategori->nama }}
             </a>
             @endforeach
         </nav>
     </div>
-
     {{-- News Categories --}}
     <div class="row {{ request('subcategory') ? 'mt-4' : '' }}">
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Nested row for non-featured blog posts-->
             <div class="row">
-                @foreach ($category as $news)
+                @if (count($category) == 0)
+                @include('includes.404')
+                @endif
+                @foreach ($category as $berita)
                 <div class="col-lg-6">
                     <!-- Blog post-->
-                    <a href="/read/{{ $news->slug }}" class="text-decoration-none text-black">
+                    <a href="/read/{{ $berita->slug }}" class="text-decoration-none text-black">
                         <div class="card-news mb-4 border-0">
                             <div class="overflow-hidden">
                                 <img class="card-img-news"
-                                    src="https://source.unsplash.com/555x300?{{ $news->subcategory->category->name }}"
-                                    alt="{{ $news->subcategory->category->name }}" />
+                                    src="https://source.unsplash.com/555x300?{{ $berita->subkategori->nama }}"
+                                    alt="{{ $berita->subkategori->kategori->nama }}" />
                             </div>
                             <div class="card-body-news p-0 mt-2">
-                                <h2 class="card-title h4">{{ $news->title }}</h2>
+                                <h2 class="card-title h4">{{ $berita->judul }}</h2>
                                 <div class="small text-muted">
-                                    <a href="/news/{{ $news->subcategory->category->slug }}?subcategory={{ $news->subcategory->slug }}"
-                                        class="text-danger text-decoration-none">{{ $news->subcategory->name
+                                    <a href="/news/{{ $berita->subkategori->kategori->slug }}?subcategory={{ $berita->subkategori->slug }}"
+                                        class="text-danger text-decoration-none">{{ $berita->subkategori->nama
                                         }}</a> .
-                                    {{ date('F d, Y', strtotime($news->created_at)) }}
+                                    {{ $berita->created_at }}
                                 </div>
                             </div>
                         </div>

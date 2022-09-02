@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $news->title)
+@section('title', $news->judul)
 @section('container')
 <div class="container">
     <div class="row mt-4 justify-content-center">
@@ -8,14 +8,14 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb fw-bold">
                     <li class="breadcrumb-item"><a href="/" class="link-dark">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/news/{{ $news->subcategory->category->slug }}"
+                    <li class="breadcrumb-item"><a href="/news/{{ $news->subkategori->kategori->slug }}"
                             class="link-dark">{{
-                            $news->subcategory->category->name
+                            $news->subkategori->kategori->nama
                             }}</a></li>
                     <li class="breadcrumb-item"><a
-                            href="/news/{{ $news->subcategory->category->slug }}?subcategory={{ $news->subcategory->slug }}"
+                            href="/news/{{ $news->subkategori->kategori->slug }}?subcategory={{ $news->subkategori->slug }}"
                             class="link-dark">{{
-                            $news->subcategory->name
+                            $news->subkategori->nama
                             }}</a></li>
                 </ol>
             </nav>
@@ -36,8 +36,8 @@
     <div class="row justify-content-between">
         {{-- Description for detail --}}
         <div class="col-md-7 col-lg-7 col-sm-7">
-            <h5 class="fs-6">Penulis : <a href="#" class="text-decoration-none">{{ $news->user->name }}</a></h5>
-            <p>{!! $news->description !!}</p>
+            <h5 class="fs-6">Penulis : <a href="#" class="text-decoration-none">{{ $news->author->user->nama }}</a></h5>
+            <p>{!! $news->deskripsi !!}</p>
         </div>
 
         {{-- Other News --}}
@@ -48,12 +48,12 @@
                 <div class="card-news mb-3 border-0 overflow-hidden">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="https://source.unsplash.com/1200x1200?{{ $other_news->subcategory->category->name }}"
-                                class="img-fluid-news rounded" alt="{{ $other_news->subcategory->category->name }}">
+                            <img src="https://source.unsplash.com/1200x1200?{{ $other_news->subkategori->kategori->nama }}"
+                                class="img-fluid-news rounded" alt="{{ $other_news->subkategori->kategori->nama }}">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body pt-0">
-                                <h5 class="card-title">{{ $other_news->title }}</h5>
+                                <h5 class="card-title">{{ $other_news->judul }}</h5>
                                 <p class="card-text">
                                     <small class="text-muted">
                                         {{ $other_news->updated_at->diffForHumans() }}
