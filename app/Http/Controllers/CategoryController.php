@@ -3,30 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\News;
+use App\Models\Kategori;
+use App\Models\Subkategori;
+use App\Models\Berita;
 
 class CategoryController extends Controller
 {
-    public function index(Category $slugCategory)
+    public function index(Kategori $slugKategori)
     {
         $title = '';
         $subcategoryName = null;
-        if(request()->is('news/'.$slugCategory->slug)){
-            $title = $slugCategory->name;
+        if(request()->is('news/'.$slugKategori->slug)){
+            $title = $slugKategori->nama;
             if (request('subcategory')) {
-                $subcategoryName = Subcategory::select('name')->firstWhere('slug', request('subcategory'));
+                $subcategoryName = Subkategori::select('nama')->firstWhere('slug', request('subcategory'));
             }
         }
 
         return view('category.index', [
             'title' => [$title, $subcategoryName],
-            'nav' => Subcategory::where('category_id', $slugCategory->id)->get(),
-            'category' => News::filter([
-                'category' => $slugCategory->slug, 
-                'subcategory' => request('subcategory'),
-                ])->get()
-        ]);
+            'nav' => Subkategori::where('kategori_id', $slugKategori->id_kategori)->get(),
+            'category' => Berita::filter([
+                    'category' => $slugKategori->slug, 
+                    'subcategory' => request('subcategory'),
+                    'search' => request('search'),
+                    ])->get()
+            ]);
     }
 }
