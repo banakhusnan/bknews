@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->string('tempat_lahir');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->string('alamat')->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
