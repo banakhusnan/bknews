@@ -66,7 +66,16 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgot-password');
+            return view('auth.forgot-password', [
+                'title' => 'Lupa Password'
+            ]);
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', [
+                'title' => 'Reset Password',
+                'request' => $request
+            ]);
         });
 
         Fortify::verifyEmailView(function () {
