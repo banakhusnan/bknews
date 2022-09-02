@@ -5,9 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\News;
+use App\Models\Kategori;
+use App\Models\SubKategori;
+use App\Models\Berita;
+use App\Models\Author;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,66 +19,55 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(3)->create();
+        User::factory(3)->state([
+            'role' => 'author'
+        ])->create();
 
         $category = [
-            'perkuliahan' => 'Perkuliahan',
-            'fasilitas' => 'Fasilitas',
-            'kemahasiswaan' => 'Kemahasiswaan',
-            'layanan' => 'Layanan',
-            'administrasi' => 'Administrasi',
+            'olah-raga' => 'Olah Raga',
+            'ekonomi' => 'Ekonomi',
+            'teknologi' => 'Teknologi',
         ];
 
+        Author::factory(3)->create();
+
         foreach ($category as $key => $ctg) {
-            Category::create([
+            Kategori::create([
                 'slug' => $key,
-                'name' => $ctg
+                'nama' => $ctg
             ]);
         }
 
         $subcategory = [
             [
-                'kurikulum' => 'Kurikulum',
-                'beban-studi' => 'Beban Studi atau SKS',
-                'dekan' => 'Dekan',
-                'dosen' => 'Dosen',
-                'wisuda' => 'Wisuda',
+                'sepak-bola' => 'Sepak Bola',
+                'moto-gp' => 'Moto GP',
+                'f1' => 'F1',
+                'badminton' => 'Badminton',
             ],
             [
-                'sarana-olah-raga' => "Sarana Olah Raga",
-                'sarana-ibadah' => "Sarana Ibadah",
-                'perpustakaan' => "Perpustakaan",
-                'auditorium' => "Auditorium",
+                'keuangan' => 'Keuangan',
+                'energi' => 'Energi',
+                'bisnis' => 'Makro',
             ],
             [
-                'unit-kegiatan-mahasiswa' => 'UKM',
-                'badan-eksekutif-mahasiswa' => 'BEM',
-                'kampus-mengajar' => 'Kampus Mengajar',
-                'pertukaran-mahasiswa' => 'Pertukaran Mahasiswa',
-                'program-kreativitas-mahasiswa' => 'PKM',
-            ],
-            [
-                'praktikum' => 'Praktikum',
-                'penyajian-materi' => 'Penyajian Materi',
-                'pembimbingan' => 'Pembimbingan',
-            ],
-            [
-                'beasiswa' => 'Beasiswa',
-                'kurikulum' => 'Kurikulum',
-                'uang-kuliah-tunggal' => 'Uang Kuliah Tunggal (UKT)'
+                'teknologi-informasi' => 'Teknologi Informasi',
+                'sains' => 'Sains',
+                'telekomunikasi' => 'Telekomunikasi',
+                'otomotif' => 'Otomotif',
             ],
         ];
 
         foreach($subcategory as $category_id => $value){
             foreach($value as $slug => $val){
-                Subcategory::create([
-                    'category_id' => $category_id + 1,
+                Subkategori::create([
+                    'kategori_id' => $category_id + 1,
                     'slug' => $slug,
-                    'name' => $val,
+                    'nama' => $val,
                 ]);
             }
         }
 
-        News::factory(20)->create();
+        Berita::factory(20)->create();
     }
 }
