@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use App\Models\Author;
 use App\Models\Subkategori;
 
@@ -19,17 +20,27 @@ class Berita extends Model
     public function scopeFilter($query, array $filter)
     {
         $query->when($filter['category'] ?? false, function($query, $category){
-            return $query->whereHas('subcategory', function($query) use($category){
-                $query->whereHas('category', function($query) use($category){
+            return $query->whereHas('subkategori', function($query) use($category){
+                $query->whereHas('kategori', function($query) use($category){
                     $query->where('slug',  $category);
                 });
             });
         });
+        
         $query->when($filter['subcategory'] ?? false, function($query, $subcategory){
-            return $query->whereHas('subcategory', function($query) use($subcategory){
+            return $query->whereHas('subkategori', function($query) use($subcategory){
                 $query->where('slug', $subcategory);
             });
         });
+
+        $query->when($filter['search'] ?? false, function($query, $search){
+            return $query->where('judul', 'like', '%'.$search . '%');
+        });
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->translatedFormat('d F, Y');
     }
     
     public function author()
